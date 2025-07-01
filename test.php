@@ -1,0 +1,46 @@
+<?php
+
+// pagesArray - список страниц сайта в виде массива с параметрами.
+$pagesArray = [
+  [
+    'loc' => 'http://example.com/page1',
+    'lastmod' => '2020-12-14',
+    'changefreq' => 'monthly',
+    'priority' => 0.8,
+  ],
+  [
+    'loc' => 'http://example.com/page2',
+    'lastmod' => '2020-12-07',
+    'changefreq' => 'monthly',
+    'priority' => 0.5,
+  ],
+  [
+    'loc' => 'http://example.com/page3',
+    'lastmod' => '>2020-12-12',
+    'changefreq' => 'priority',
+    'priority' => 0.8,
+  ],
+  [
+    'loc' => 'http://example.com/page4',
+    'lastmod' => '2020-12-11',
+    'changefreq' => 'priority',
+    'priority' => 1,
+  ],
+  [
+    'loc' => 'http://example.com/page5',
+    'lastmod' => '2020-12-12',
+    'changefreq' => 'priority',
+    'priority' => 0.1,
+  ],
+  [
+    'loc' => 'http://example.com/page6',
+    'lastmod' => '2020-12-11',
+    'changefreq' => 'priority',
+    'priority' => 0.1,
+  ]
+];
+
+$format = 'csv'; //Формат записи карты сайта (csv, json, xml)
+$srcDirectory = './folder/folder/folder'; // Путь до папки, в которую запишется карта
+
+include 'libs.php';
