@@ -1,0 +1,7 @@
+{
+  "name": "kviktime/mapgen",
+  "description": "Создание карты сайта в форматах csv, xml, json",
+  "require": {
+    "php": ">=8.0"
+  }
+}
