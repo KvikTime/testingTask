@@ -3,5 +3,13 @@
   "description": "Создание карты сайта в форматах csv, xml, json",
   "require": {
     "php": ">=8.0"
-  }
+  },
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "KvikTime",
+      "email": "kurzaevvitek@mail.ru"
+    }
+  ]
 }

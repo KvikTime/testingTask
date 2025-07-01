@@ -1,6 +1,6 @@
 <?php
+include '../src/mapgen.php';
 
-// pagesArray - список страниц сайта в виде массива с параметрами.
 $pagesArray = [
   [
     'loc' => 'http://example.com/page1',
@@ -40,7 +40,8 @@ $pagesArray = [
   ]
 ];
 
-$format = 'csv'; //Формат записи карты сайта (csv, json, xml)
-$srcDirectory = './folder/folder/folder'; // Путь до папки, в которую запишется карта
+$format = 'csv';
+$srcDirectory = './folder'; 
 
-include 'libs.php';
+$generator = new SiteMapGenerator($pagesArray, $format, $srcDirectory);
+$generator->validateField($pagesArray);

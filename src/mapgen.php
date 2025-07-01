@@ -1,53 +1,64 @@
 <?php
-
 class SiteMapGenerator
 {
-  public array $pages;
-  public string $fileType;
-  public string $filePath;
+  private array $pages;
+  private string $fileType;
+  private string $filePath;
 
   public function __construct(array $pages, string $fileType, string $filePath)
   {
-    $this->pages = $pages;
-    $this->fileType = $fileType;
-    if (!is_dir($filePath)) {
-      mkdir($filePath, 0777, true);
+    try {
+      $this->pages = $pages;
+      $this->fileType = $fileType;
+      if (!is_dir($filePath)) {
+        mkdir($filePath, 0777, true);
+      }
+      $this->filePath = is_writable($filePath) ? $filePath . "/sitemap." . $fileType : throw new AccessClosed("Нет доступа к указанному пути: " . $filePath . PHP_EOL);
+    } catch (AccessClosed $e) {
+      echo $e->getMessage();
     }
-    $this->filePath = is_writable($filePath) ? $filePath . "/sitemap." . $fileType : throw new AccessClosed("Нет доступа к указанному пути: " . $filePath);
   }
 
-  public function generateSitemap(): void
+  private function generateSitemap(): void
   {
-    switch ($this->fileType) {
-      case 'xml':
-        $this->generateXml();
-        break;
-      case 'csv':
-        $this->generateCsv();
-        break;
-      case 'json':
-        $this->generateJson();
-        break;
-      default:
-        throw new UnsupportedTypeFile("Неподдеживаемый формат файла: " . $this->fileType);
+    try {
+      switch ($this->fileType) {
+        case 'xml':
+          $this->generateXml();
+          break;
+        case 'csv':
+          $this->generateCsv();
+          break;
+        case 'json':
+          $this->generateJson();
+          break;
+        default:
+          throw new UnsupportedTypeFile('Неподдеживаемый формат файла: ' . $this->fileType . PHP_EOL);
+      }
+    } catch (UnsupportedTypeFile $e) {
+      echo $e->getMessage();
     }
   }
 
   public function validateField(array $pagesArray): void
   {
-    foreach ($pagesArray as $pageFieldsArray) {
-      if (
-        isset($pageFieldsArray['changefreq']) &&
-        isset($pageFieldsArray['lastmod']) &&
-        isset($pageFieldsArray['loc']) &&
-        isset($pageFieldsArray['priority'])
-      ) {
-        continue;
-      } else {
-        throw new NotFoundField('Ошибка валидации полей' . PHP_EOL);
+    try {
+      foreach ($pagesArray as $pageFieldsArray) {
+        if (
+          isset($pageFieldsArray['changefreq']) &&
+          isset($pageFieldsArray['lastmod']) &&
+          isset($pageFieldsArray['loc']) &&
+          isset($pageFieldsArray['priority'])
+        ) {
+          continue;
+        } else {
+          throw new NotFoundField('Ошибка валидации полей' . PHP_EOL);
+        }
       }
+      $this->generateSitemap();
+    } catch (NotFoundField $e) {
+      echo $e->getMessage();
     }
-    $this->generateSitemap();
   }
 
   private function generateXml(): void
@@ -78,6 +89,7 @@ class SiteMapGenerator
     }
 
     $xml->save($this->filePath);
+    echo 'Карта успешно создана';
   }
 
   private function generateCsv(): void
@@ -92,30 +104,20 @@ class SiteMapGenerator
         $page['lastmod'],
         $page['changefreq'] ?? '',
         $page['priority'] ?? ''
-      ],';');
+      ], ';');
     }
     fclose($file);
+    echo 'Карта успешно создана';
   }
 
   private function generateJson(): void
   {
     $json = json_encode($this->pages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     file_put_contents($this->filePath, $json);
+    echo 'Карта успешно создана';
   }
 }
 
-class UnsupportedTypeFile extends Exception {};
-class NotFoundField extends Exception {};
-class AccessClosed extends Exception {};
-
-try {
-  $generator = new SiteMapGenerator($pagesArray, $format, $srcDirectory);
-  $generator->validateField($pagesArray);
-  echo 'Карта успешно создана';
-} catch (UnsupportedTypeFile $e) {
-  echo $e->getMessage();
-} catch (NotFoundField $e) {
-  echo $e->getMessage();
-} catch (AccessClosed $e) {
-  echo $e->getMessage();
-}
+class UnsupportedTypeFile extends Exception{};
+class NotFoundField extends Exception{};
+class AccessClosed extends Exception{};
