@@ -1,7 +1,0 @@
-loc;lastmod;changefreq;priority
-http://example.com/page1;2020-12-14;monthly;0.8
-http://example.com/page2;2020-12-07;monthly;0.5
-http://example.com/page3;>2020-12-12;priority;0.8
-http://example.com/page4;2020-12-11;priority;1
-http://example.com/page5;2020-12-12;priority;0.1
-http://example.com/page6;2020-12-11;priority;0.1
