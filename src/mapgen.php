@@ -9,11 +9,11 @@ class SiteMapGenerator
   {
     try {
       $this->pages = $pages;
-      $this->fileType = $fileType;
-      if (!is_dir($filePath)) {
-        mkdir($filePath, 0777, true);
+      $this->fileType = trim($fileType);
+      if (!is_dir(trim($filePath))) {
+        mkdir(trim($filePath), 0777, true);
       }
-      $this->filePath = is_writable($filePath) ? $filePath . "/sitemap." . $fileType : throw new AccessClosed("Нет доступа к указанному пути: " . $filePath . PHP_EOL);
+      $this->filePath = is_writable(trim($filePath)) ? trim($filePath) . "/sitemap." . trim($fileType) : throw new AccessClosed("Нет доступа к указанному пути: " . trim($filePath) . PHP_EOL);
     } catch (AccessClosed $e) {
       echo $e->getMessage();
     }
@@ -89,7 +89,7 @@ class SiteMapGenerator
     }
 
     $xml->save($this->filePath);
-    echo 'Карта успешно создана';
+    echo 'Карта сайта в формате XML успешно создана' . PHP_EOL;
   }
 
   private function generateCsv(): void
@@ -107,14 +107,14 @@ class SiteMapGenerator
       ], ';');
     }
     fclose($file);
-    echo 'Карта успешно создана';
+    echo 'Карта сайта в формате CSV успешно создана' . PHP_EOL;
   }
 
   private function generateJson(): void
   {
     $json = json_encode($this->pages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     file_put_contents($this->filePath, $json);
-    echo 'Карта успешно создана';
+    echo 'Карта сайта в формате JSON успешно создана' . PHP_EOL;
   }
 }
 

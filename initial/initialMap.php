@@ -40,8 +40,8 @@ $pagesArray = [
   ]
 ];
 
-$format = 'csv';
-$srcDirectory = './folder'; 
+$format = 'json';
+$srcDirectory = './folder/new'; 
 
 $generator = new SiteMapGenerator($pagesArray, $format, $srcDirectory);
 $generator->validateField($pagesArray);
