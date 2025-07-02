@@ -11,5 +11,6 @@
       "name": "KvikTime",
       "email": "kurzaevvitek@mail.ru"
     }
-  ]
+  ],
+"minimum-stability": "dev"
 }
