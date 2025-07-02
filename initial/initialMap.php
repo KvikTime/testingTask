@@ -5,38 +5,38 @@ $pagesArray = [
   [
     'loc' => 'http://example.com/page1',
     'lastmod' => '2020-12-14',
-    'changefreq' => 'monthly',
     'priority' => 0.8,
+    'changefreq' => 'monthly',
   ],
   [
     'loc' => 'http://example.com/page2',
     'lastmod' => '2020-12-07',
-    'changefreq' => 'monthly',
     'priority' => 0.5,
+    'changefreq' => 'monthly',
   ],
   [
     'loc' => 'http://example.com/page3',
     'lastmod' => '>2020-12-12',
-    'changefreq' => 'priority',
     'priority' => 0.8,
+    'changefreq' => 'monthly ',
   ],
   [
     'loc' => 'http://example.com/page4',
     'lastmod' => '2020-12-11',
-    'changefreq' => 'priority',
     'priority' => 1,
+    'changefreq' => 'always',
   ],
   [
     'loc' => 'http://example.com/page5',
     'lastmod' => '2020-12-12',
-    'changefreq' => 'priority',
     'priority' => 0.1,
+    'changefreq' => 'monthly',
   ],
   [
     'loc' => 'http://example.com/page6',
     'lastmod' => '2020-12-11',
-    'changefreq' => 'priority',
     'priority' => 0.1,
+    'changefreq' => 'monthly',
   ]
 ];
 

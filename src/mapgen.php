@@ -79,11 +79,11 @@ class SiteMapGenerator
       $lastmod = $xml->createElement('lastmod', $page['lastmod']);
       $url->appendChild($lastmod);
 
-      $changefreq = $xml->createElement('changefreq', $page['changefreq']);
-      $url->appendChild($changefreq);
-
       $priority = $xml->createElement('priority', strval($page['priority']));
       $url->appendChild($priority);
+
+      $changefreq = $xml->createElement('changefreq', $page['changefreq']);
+      $url->appendChild($changefreq);
 
       $urlset->appendChild($url);
     }
@@ -96,14 +96,14 @@ class SiteMapGenerator
   {
     $file = fopen($this->filePath, 'w');
 
-    fputcsv($file, ['loc', 'lastmod', 'changefreq', 'priority'], ';');
+    fputcsv($file, ['loc', 'lastmod', 'priority', 'changefreq'], ';');
 
     foreach ($this->pages as $page) {
       fputcsv($file, [
         $page['loc'],
         $page['lastmod'],
-        $page['changefreq'] ?? '',
-        $page['priority'] ?? ''
+        $page['priority'] ?? '',
+        $page['changefreq'] ?? ''
       ], ';');
     }
     fclose($file);
